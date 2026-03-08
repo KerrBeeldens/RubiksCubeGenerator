@@ -85,8 +85,26 @@ public class Cublet {
      * @param numberOfTurns the number of quarter turns to rotate
      */
     private void move(Axis axis, int numberOfTurns) {
+        switch (axis) {
+            case X -> rotateAboutX(numberOfTurns);
+            case Y -> rotateAboutY(numberOfTurns);
+            case Z -> rotateAboutZ(numberOfTurns);
+        }
+    }
+
+    private void rotateAboutX(int numberOfTurns) {
 
     }
+
+    private void rotateAboutY(int numberOfTurns) {
+
+    }
+
+    private void rotateAboutZ(int numberOfTurns) {
+    }
+
+    // GETTERS
+    public ArrayList<CubletMove> getMoveHistory() {return moveHistory;}
 
     /**
      * A record of a move of a cublet
@@ -95,6 +113,6 @@ public class Cublet {
      * @param numberOfTurns The number of quarter turns about the rotation axis
      * @param moveCount     The move number this move was part of
      */
-    private record CubletMove(Axis axis, int numberOfTurns, int moveCount) {
+    public record CubletMove(Axis axis, int numberOfTurns, int moveCount) {
     }
 }

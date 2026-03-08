@@ -34,4 +34,8 @@ public class RubiksCube {
 
         moveCount++;
     }
+
+    // GETTERS
+    public ArrayList<Cublet> getCublets() {return cublets;}
+    public int getMoveCount() {return moveCount;}
 }

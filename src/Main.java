@@ -15,4 +15,8 @@ void main() {
     for(String token : tokens) {
         rubiksCube.move(Move.fromString(token));
     }
+
+    // Generate the CSS
+    CubeCssGenerator.generateCss(rubiksCube, "resources/cube_moves.css");
+    CubeHtmlGenerator.generateHtml(rubiksCube, "resources/cube_moves.html");
 }

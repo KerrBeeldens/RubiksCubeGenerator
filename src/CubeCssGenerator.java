@@ -1,0 +1,60 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+public class CubeCssGenerator {
+
+    /**
+     * Generate CSS logic to display the Rubik's cube moves
+     * @param rubiksCube The Rubik's cube
+     * @param filepath The filepath to save the generated CSS to
+     */
+    public static void generateCss(RubiksCube rubiksCube, String filepath) {
+        StringBuilder css = new StringBuilder();
+
+        // Generate a custom property for each step
+        int steps = rubiksCube.getMoveCount();
+        for (int i = 0; i < steps; i++) {
+            css.append(String.format(
+                    "@property --step-%03d {\n" +
+                            "    syntax: \"<angle>\";\n" +
+                            "    inherits: false;\n" +
+                            "    initial-value: 0deg;\n" +
+                            "}\n\n" +
+                    "body:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {\n" +
+                            "    --step-%03d: 90deg;\n" +
+                            "}\n\n", i, i, i
+            ));
+        }
+
+        // Add whitespace
+        css.append("\n");
+
+        // Generate a CSS Selector + formatting for each cublet
+        ArrayList<Cublet> cublets = rubiksCube.getCublets();
+        for (int i = 0; i < cublets.size(); i++) {
+
+            // Get movement history
+            StringBuilder moveHistorySB = new StringBuilder();
+            ArrayList<Cublet.CubletMove> moveHistory = cublets.get(i).getMoveHistory();
+
+            for(Cublet.CubletMove cubletMove : moveHistory) {
+                moveHistorySB.append(String.format("rotate%s(calc(var(--step-%03d) * %d)) ",
+                        cubletMove.axis(), cubletMove.moveCount(), cubletMove.numberOfTurns()));
+            }
+
+            // Use movement history in final selector
+            css.append(String.format("body>div:nth-of-type(%d)>div {\n" +
+                    "    transform:\n" +
+                    "        %stranslateX(calc(var(--x) * var(--cube-width))) translateY(calc(var(--y) * var(--cube-height))) translateZ(calc(var(--z) * var(--cube-depth)));\n" +
+                    "}\n\n", i + 2, moveHistorySB));
+        }
+
+        // Store the result in the specified path
+        try (PrintWriter output = new PrintWriter(filepath)) {
+            output.print(css);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
