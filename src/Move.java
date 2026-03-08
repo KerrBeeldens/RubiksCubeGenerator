@@ -32,6 +32,7 @@ public enum Move {
 
     /**
      * Convert a given move to a move Enum
+     *
      * @param moveString String representing a move
      * @return Enum Move with type represented by provided string
      */

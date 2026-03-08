@@ -1,12 +1,12 @@
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This represents a Rubik's Cube of size 3x3 consisting of 27 cublets
  */
 public class RubiksCube {
 
-    ArrayList<Cublet> cublets = new ArrayList<>();
+    private final ArrayList<Cublet> cublets = new ArrayList<>();
+    private int moveCount = 0;
 
     public RubiksCube() {
 
@@ -23,23 +23,15 @@ public class RubiksCube {
 
     /**
      * Move the cube given a move notation
+     *
      * @param move the move made
      */
     public void move(Move move) {
-        // Filter out cublets that are not part of the move
-        List<Cublet> cubletsToMove = cublets.stream().filter(cublet ->
-            switch (move) {
-                case LEFT, LEFT_PRIME, LEFT_TWICE -> cublet.getX() == -1;
-                case RIGHT, RIGHT_PRIME, RIGHT_TWICE -> cublet.getX() == 1;
-                case UP, UP_PRIME, UP_TWICE -> cublet.getY() == -1;
-                case DOWN, DOWN_PRIME, DOWN_TWICE -> cublet.getY() == 1;
-                case FRONT, FRONT_PRIME, FRONT_TWICE -> cublet.getZ() == 1;
-                case BACK, BACK_PRIME, BACK_TWICE -> cublet.getZ() == -1;
-            }).toList();
-
         // Move cublets that are part of the move
-        for (Cublet cublet : cubletsToMove) {
-            cublet.move(move);
+        for (Cublet cublet : cublets) {
+            cublet.move(move, moveCount);
         }
+
+        moveCount++;
     }
 }
