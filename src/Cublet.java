@@ -22,4 +22,15 @@ public class Cublet {
         this.y = y;
         this.z = z;
     }
+
+    /**
+     * Move a cublet given a move notation
+     * @param move the move the cublet is part of
+     */
+    public void move(Move move) {
+    }
+    // GETTERS
+    public int getX() {return x;}
+    public int getY() {return y;}
+    public int getZ() {return z;}
 }

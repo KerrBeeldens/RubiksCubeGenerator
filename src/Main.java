@@ -11,4 +11,8 @@ void main() {
     }
 
     RubiksCube rubiksCube = new RubiksCube();
+
+    for(String token : tokens) {
+        rubiksCube.move(Move.fromString(token));
+    }
 }
