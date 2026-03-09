@@ -42,11 +42,18 @@ public class Cublet {
     public void move(Move move, int moveCount) {
         if (!isPartOfMove(move)) return;
 
-        Axis axis = getAxis(move);
+        Axis moveAxis = getAxis(move);
         int turns = getTurns(move);
 
-        moveHistory.add(new CubletMove(axis, turns, moveCount));
-        move(axis, turns);
+        Axis localAxis = switch (moveAxis) {
+            case Axis.X -> this.globalXAxis;
+            case Axis.Y -> this.globalYAxis;
+            case Axis.Z -> this.globalZAxis;
+            default -> throw new IllegalStateException("Unexpected value: " + moveAxis);
+        };
+
+        moveHistory.add(new CubletMove(localAxis, turns, moveCount));
+        move(moveAxis, turns);
     }
 
     /**
@@ -118,9 +125,15 @@ public class Cublet {
     private void rotateAboutX(int numberOfTurns) {
         numberOfTurns = (numberOfTurns % 4 + 4) % 4; // normalize to 0-3
         for (int i = 0; i < numberOfTurns; i++) {
+            // Update position
             int temp = y;
             y = -z;
             z = temp;
+
+            // Update local axes mapping to global axes
+            Axis tempAxis = globalYAxis;
+            globalYAxis = globalZAxis.inverse();
+            globalZAxis = tempAxis;
         }
     }
 
@@ -132,23 +145,35 @@ public class Cublet {
     private void rotateAboutY(int numberOfTurns) {
         numberOfTurns = (numberOfTurns % 4 + 4) % 4; // normalize to 0-3
         for (int i = 0; i < numberOfTurns; i++) {
+            // Update position
             int temp = x;
             x = z;
             z = -temp;
+
+            // Update local axes mapping to global axes
+            Axis tempAxis = globalXAxis;
+            globalXAxis = globalZAxis;
+            globalZAxis = tempAxis.inverse();
         }
     }
 
     /**
-     * Rotate the cublet about the Y axis for a number of quarter turns
+     * Rotate the cublet about the Z axis for a number of quarter turns
      *
      * @param numberOfTurns the number of quarter turns to rotate
      */
     private void rotateAboutZ(int numberOfTurns) {
         numberOfTurns = (numberOfTurns % 4 + 4) % 4; // normalize to 0-3
         for (int i = 0; i < numberOfTurns; i++) {
+            // Update position
             int temp = x;
             x = -y;
             y = temp;
+
+            // Update local axes mapping to global axes
+            Axis tempAxis = globalXAxis;
+            globalXAxis = globalYAxis.inverse();
+            globalYAxis = tempAxis;
         }
     }
 

@@ -4,5 +4,16 @@
  */
 enum Axis {
     X, Y, Z,
-    X_NEGATIVE, Y_NEGATIVE, Z_NEGATIVE
+    X_NEGATIVE, Y_NEGATIVE, Z_NEGATIVE;
+
+    public Axis inverse() {
+        return switch(this) {
+            case X -> X_NEGATIVE;
+            case X_NEGATIVE -> X;
+            case Y -> Y_NEGATIVE;
+            case Y_NEGATIVE -> Y;
+            case Z -> Z_NEGATIVE;
+            case Z_NEGATIVE -> Z;
+        };
+    }
 }

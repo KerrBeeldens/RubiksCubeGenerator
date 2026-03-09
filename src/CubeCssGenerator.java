@@ -44,8 +44,24 @@ public class CubeCssGenerator {
             ArrayList<Cublet.CubletMove> moveHistory = cublets.get(i).getMoveHistory();
 
             for (Cublet.CubletMove cubletMove : moveHistory) {
+
+                int rotationSign = switch (cubletMove.axis()) {
+                    case X, Y, Z -> 1;
+                    case X_NEGATIVE, Y_NEGATIVE, Z_NEGATIVE -> -1;
+                };
+
+                int moveCount = cubletMove.moveCount();
+
+                String rotationAxis = switch (cubletMove.axis()) {
+                    case X, X_NEGATIVE -> "X";
+                    case Y, Y_NEGATIVE -> "Y";
+                    case Z, Z_NEGATIVE -> "Z";
+                };
+
+                int numberOfTurns = cubletMove.numberOfTurns();
+
                 moveHistorySB.append(String.format("rotate%s(calc(var(--step-%03d) * %d)) ",
-                        cubletMove.axis(), cubletMove.moveCount(), cubletMove.numberOfTurns()));
+                        rotationAxis, moveCount, numberOfTurns * rotationSign));
             }
 
             // Use movement history in final selector
