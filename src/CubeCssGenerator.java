@@ -6,8 +6,9 @@ public class CubeCssGenerator {
 
     /**
      * Generate CSS logic to display the Rubik's cube moves
+     *
      * @param rubiksCube The Rubik's cube
-     * @param filepath The filepath to save the generated CSS to
+     * @param filepath   The filepath to save the generated CSS to
      */
     public static void generateCss(RubiksCube rubiksCube, String filepath) {
         StringBuilder css = new StringBuilder();
@@ -16,14 +17,18 @@ public class CubeCssGenerator {
         int steps = rubiksCube.getMoveCount();
         for (int i = 0; i < steps; i++) {
             css.append(String.format(
-                    "@property --step-%03d {\n" +
-                            "    syntax: \"<angle>\";\n" +
-                            "    inherits: false;\n" +
-                            "    initial-value: 0deg;\n" +
-                            "}\n\n" +
-                    "body:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {\n" +
-                            "    --step-%03d: 90deg;\n" +
-                            "}\n\n", i, i, i
+                    """
+                            @property --step-%03d {
+                                syntax: "<angle>";
+                                inherits: false;
+                                initial-value: 0deg;
+                            }
+                            
+                            body:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {
+                                --step-%03d: 90deg;
+                            }
+                            
+                            """, i, i + 1, i
             ));
         }
 
@@ -38,16 +43,19 @@ public class CubeCssGenerator {
             StringBuilder moveHistorySB = new StringBuilder();
             ArrayList<Cublet.CubletMove> moveHistory = cublets.get(i).getMoveHistory();
 
-            for(Cublet.CubletMove cubletMove : moveHistory) {
+            for (Cublet.CubletMove cubletMove : moveHistory) {
                 moveHistorySB.append(String.format("rotate%s(calc(var(--step-%03d) * %d)) ",
                         cubletMove.axis(), cubletMove.moveCount(), cubletMove.numberOfTurns()));
             }
 
             // Use movement history in final selector
-            css.append(String.format("body>div:nth-of-type(%d)>div {\n" +
-                    "    transform:\n" +
-                    "        %stranslateX(calc(var(--x) * var(--cube-width))) translateY(calc(var(--y) * var(--cube-height))) translateZ(calc(var(--z) * var(--cube-depth)));\n" +
-                    "}\n\n", i + 2, moveHistorySB));
+            css.append(String.format("""
+                    body>div:nth-of-type(%d)>div {
+                        transform:
+                            %stranslateX(calc(var(--x) * var(--cube-width))) translateY(calc(var(--y) * var(--cube-height))) translateZ(calc(var(--z) * var(--cube-depth)));
+                    }
+                    
+                    """, i + 2, moveHistorySB));
         }
 
         // Store the result in the specified path

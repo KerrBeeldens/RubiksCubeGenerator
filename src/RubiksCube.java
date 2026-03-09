@@ -7,6 +7,7 @@ public class RubiksCube {
 
     private final ArrayList<Cublet> cublets = new ArrayList<>();
     private int moveCount = 0;
+    private ArrayList<Move> moveHistory = new ArrayList<>();
 
     public RubiksCube() {
 
@@ -32,10 +33,12 @@ public class RubiksCube {
             cublet.move(move, moveCount);
         }
 
+        moveHistory.add(move);
         moveCount++;
     }
 
     // GETTERS
     public ArrayList<Cublet> getCublets() {return cublets;}
     public int getMoveCount() {return moveCount;}
+    public ArrayList<Move> getMoveHistory() {return moveHistory;}
 }
