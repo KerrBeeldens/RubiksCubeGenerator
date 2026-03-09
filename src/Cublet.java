@@ -90,8 +90,8 @@ public class Cublet {
      */
     private int getTurns(Move move) {
         return switch (move) {
-            case LEFT, BACK_PRIME, FRONT, DOWN_PRIME, UP, RIGHT_PRIME -> 1;
-            case LEFT_PRIME, BACK, FRONT_PRIME, DOWN, UP_PRIME, RIGHT -> -1;
+            case LEFT, BACK, FRONT_PRIME, DOWN_PRIME, UP, RIGHT_PRIME -> -1;
+            case LEFT_PRIME, BACK_PRIME, FRONT, DOWN, UP_PRIME, RIGHT -> 1;
             case LEFT_TWICE, BACK_TWICE, FRONT_TWICE, DOWN_TWICE, UP_TWICE, RIGHT_TWICE -> 2;
         };
     }
@@ -116,7 +116,12 @@ public class Cublet {
      * @param numberOfTurns the number of quarter turns to rotate
      */
     private void rotateAboutX(int numberOfTurns) {
-
+        numberOfTurns = (numberOfTurns % 4 + 4) % 4; // normalize to 0-3
+        for (int i = 0; i < numberOfTurns; i++) {
+            int temp = y;
+            y = -z;
+            z = temp;
+        }
     }
 
     /**
@@ -125,7 +130,12 @@ public class Cublet {
      * @param numberOfTurns the number of quarter turns to rotate
      */
     private void rotateAboutY(int numberOfTurns) {
-
+        numberOfTurns = (numberOfTurns % 4 + 4) % 4; // normalize to 0-3
+        for (int i = 0; i < numberOfTurns; i++) {
+            int temp = x;
+            x = z;
+            z = -temp;
+        }
     }
 
     /**
@@ -134,6 +144,12 @@ public class Cublet {
      * @param numberOfTurns the number of quarter turns to rotate
      */
     private void rotateAboutZ(int numberOfTurns) {
+        numberOfTurns = (numberOfTurns % 4 + 4) % 4; // normalize to 0-3
+        for (int i = 0; i < numberOfTurns; i++) {
+            int temp = x;
+            x = -y;
+            y = temp;
+        }
     }
 
     // GETTERS
