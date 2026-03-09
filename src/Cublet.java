@@ -49,6 +49,12 @@ public class Cublet {
         move(axis, turns);
     }
 
+    /**
+     * Check if this cublet is part of the move
+     *
+     * @param move the move to be made
+     * @return true if the cublet is part of the move, false if not
+     */
     private boolean isPartOfMove(Move move) {
         return switch (move) {
             case LEFT, LEFT_PRIME, LEFT_TWICE -> this.x == -1;
@@ -60,16 +66,28 @@ public class Cublet {
         };
     }
 
+    /**
+     * Get The axis about which the move will rotate
+     *
+     * @param move the move to be made
+     * @return the axis about which the move will rotate
+     */
     private Axis getAxis(Move move) {
         return switch (move) {
             case LEFT, LEFT_PRIME, LEFT_TWICE, RIGHT, RIGHT_PRIME, RIGHT_TWICE -> Axis.X;
-
             case UP, UP_PRIME, UP_TWICE, DOWN, DOWN_PRIME, DOWN_TWICE -> Axis.Y;
-
             case FRONT, FRONT_PRIME, FRONT_TWICE, BACK, BACK_PRIME, BACK_TWICE -> Axis.Z;
         };
     }
 
+
+    /**
+     * Get the number of turns involved in the move
+     *
+     * @param move the move to be made
+     * @return the number of moves involved. 2 is a 180-degree turn, -1 is a 90-degree counterclockwise turn
+     * and 1 is a 90-degree clockwise turn
+     */
     private int getTurns(Move move) {
         return switch (move) {
             case LEFT, BACK_PRIME, FRONT, DOWN_PRIME, UP, RIGHT_PRIME -> 1;
@@ -92,14 +110,29 @@ public class Cublet {
         }
     }
 
+    /**
+     * Rotate the cublet about the X axis for a number of quarter turns
+     *
+     * @param numberOfTurns the number of quarter turns to rotate
+     */
     private void rotateAboutX(int numberOfTurns) {
 
     }
 
+    /**
+     * Rotate the cublet about the Y axis for a number of quarter turns
+     *
+     * @param numberOfTurns the number of quarter turns to rotate
+     */
     private void rotateAboutY(int numberOfTurns) {
 
     }
 
+    /**
+     * Rotate the cublet about the Y axis for a number of quarter turns
+     *
+     * @param numberOfTurns the number of quarter turns to rotate
+     */
     private void rotateAboutZ(int numberOfTurns) {
     }
 

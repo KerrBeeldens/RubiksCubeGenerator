@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class CubeHtmlGenerator {
 
+    /**
+     * Generate HTML checkboxes to display the Rubik's cube moves
+     *
+     * @param rubiksCube The Rubik's cube
+     * @param filepath   The filepath to save the generated HTML to
+     */
     public static void generateHtml(RubiksCube rubiksCube, String filepath) {
         StringBuilder html = new StringBuilder();
         html.append("<div>\n");

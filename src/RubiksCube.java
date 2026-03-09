@@ -9,6 +9,9 @@ public class RubiksCube {
     private int moveCount = 0;
     private ArrayList<Move> moveHistory = new ArrayList<>();
 
+    /**
+     * Create the Rubik's Cube
+     */
     public RubiksCube() {
 
         // The cube is ordered from the top layer (-y is pointing up) to the bottom layer,
