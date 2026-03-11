@@ -21,11 +21,11 @@ public class CubeCssGenerator {
                             @property --step-%03d {
                                 syntax: "<angle>";
                                 inherits: false;
-                                initial-value: 0deg;
+                                initial-value: 90deg;
                             }
                             
-                            body:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {
-                                --step-%03d: 90deg;
+                            &:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {
+                                --step-%03d: 0deg;
                             }
                             
                             """, i, i + 1, i
@@ -66,7 +66,7 @@ public class CubeCssGenerator {
 
             // Use movement history in final selector
             css.append(String.format("""
-                    body>div:nth-of-type(%d)>div {
+                    &>div:nth-of-type(%d)>div {
                         transform:
                             %stranslateX(calc(var(--x) * var(--cube-width))) translateY(calc(var(--y) * var(--cube-height))) translateZ(calc(var(--z) * var(--cube-depth)));
                     }
