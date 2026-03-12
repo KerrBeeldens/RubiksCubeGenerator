@@ -27,16 +27,13 @@ public class CubeHtmlGenerator {
                 // Checkbox id: replace invalid characters for HTML id
                 String id = moveStr.replace("'", "p") + "-" + String.format("%03d", i);
 
-                // Append 'v' to display label if this move was performed
-                String displayLabel = move.equals(correctMove) ? moveStr + "v" : moveStr;
-
                 html.append(String.format(
                         "        <label>%s\n" +
                                 "            <input id=\"%s\" type=\"checkbox\"%s>\n" +
                                 "        </label>\n",
-                        displayLabel,
+                        moveStr,
                         id,
-                        displayLabel.endsWith("v") ? " required" : ""
+                        move.equals(correctMove) ? " required" : ""
                 ));
             }
 

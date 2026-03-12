@@ -21,14 +21,24 @@ public class CubeCssGenerator {
                             @property --step-%03d {
                                 syntax: "<angle>";
                                 inherits: false;
-                                initial-value: 90deg;
+                                initial-value: 0deg;
                             }
-                            
-                            &:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {
-                                --step-%03d: 0deg;
-                            }
-                            
                             """, i, i + 1, i
+            ));
+        }
+
+        // Add whitespace
+        css.append("\n");
+
+        // Generate button check for each step
+        for (int i = 0; i < steps; i++) {
+            css.append(String.format(
+                    """
+                            &:has(> div:first-of-type > div:nth-child(%d) > label > input[required]:checked)>div>div {
+                                --step-%03d: 90deg;
+                            }
+                            
+                            """, i + 1, i
             ));
         }
 
