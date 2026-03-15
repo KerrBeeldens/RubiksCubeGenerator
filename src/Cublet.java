@@ -70,6 +70,9 @@ public class Cublet {
             case DOWN, DOWN_PRIME, DOWN_TWICE -> this.y == 1;
             case FRONT, FRONT_PRIME, FRONT_TWICE -> this.z == 1;
             case BACK, BACK_PRIME, BACK_TWICE -> this.z == -1;
+
+            // Whole cube rotations involve all cublets
+            case X, X_TWICE, X_PRIME, Y, Y_TWICE, Y_PRIME, Z, Z_TWICE, Z_PRIME  -> true;
         };
     }
 
@@ -81,9 +84,9 @@ public class Cublet {
      */
     private Axis getAxis(Move move) {
         return switch (move) {
-            case LEFT, LEFT_PRIME, LEFT_TWICE, RIGHT, RIGHT_PRIME, RIGHT_TWICE -> Axis.X;
-            case UP, UP_PRIME, UP_TWICE, DOWN, DOWN_PRIME, DOWN_TWICE -> Axis.Y;
-            case FRONT, FRONT_PRIME, FRONT_TWICE, BACK, BACK_PRIME, BACK_TWICE -> Axis.Z;
+            case LEFT, LEFT_PRIME, LEFT_TWICE, RIGHT, RIGHT_PRIME, RIGHT_TWICE, X, X_TWICE, X_PRIME -> Axis.X;
+            case UP, UP_PRIME, UP_TWICE, DOWN, DOWN_PRIME, DOWN_TWICE, Y, Y_TWICE, Y_PRIME -> Axis.Y;
+            case FRONT, FRONT_PRIME, FRONT_TWICE, BACK, BACK_PRIME, BACK_TWICE, Z, Z_TWICE, Z_PRIME -> Axis.Z;
         };
     }
 
@@ -97,9 +100,9 @@ public class Cublet {
      */
     private int getTurns(Move move) {
         return switch (move) {
-            case LEFT, BACK, FRONT_PRIME, DOWN_PRIME, UP, RIGHT_PRIME -> -1;
-            case LEFT_PRIME, BACK_PRIME, FRONT, DOWN, UP_PRIME, RIGHT -> 1;
-            case LEFT_TWICE, BACK_TWICE, FRONT_TWICE, DOWN_TWICE, UP_TWICE, RIGHT_TWICE -> 2;
+            case LEFT, BACK, FRONT_PRIME, DOWN_PRIME, UP, RIGHT_PRIME, X_PRIME, Y, Z_PRIME -> -1;
+            case LEFT_PRIME, BACK_PRIME, FRONT, DOWN, UP_PRIME, RIGHT, X, Y_PRIME, Z -> 1;
+            case LEFT_TWICE, BACK_TWICE, FRONT_TWICE, DOWN_TWICE, UP_TWICE, RIGHT_TWICE, X_TWICE, Y_TWICE, Z_TWICE -> 2;
         };
     }
 

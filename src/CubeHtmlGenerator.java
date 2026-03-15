@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 public class CubeHtmlGenerator {
 
@@ -16,12 +17,29 @@ public class CubeHtmlGenerator {
 
         ArrayList<Move> moveHistory = rubiksCube.getMoveHistory();
 
+        // Moves to exclude
+        EnumSet<Move> excludedMoves = EnumSet.of(
+                Move.X, Move.X_TWICE, Move.X_PRIME,
+                Move.Y, Move.Y_TWICE, Move.Y_PRIME,
+                Move.Z, Move.Z_TWICE, Move.Z_PRIME
+        );
+
         for (int i = 0; i < moveHistory.size(); i++) {
             Move correctMove = moveHistory.get(i);
+
+            // Skip excluded moves
+            if (excludedMoves.contains(correctMove)) {
+                continue;
+            }
 
             html.append("    <div>\n"); // start of step div
 
             for (Move move : Move.values()) {
+                // Skip excluded moves
+                if (excludedMoves.contains(move)) {
+                    continue;
+                }
+
                 String moveStr = move.toString();
 
                 // Checkbox id: replace invalid characters for HTML id
