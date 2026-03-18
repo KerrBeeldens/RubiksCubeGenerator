@@ -61,7 +61,7 @@ public class CubeCssGenerator {
                             @property %s {
                                 syntax: "<angle>";
                                 inherits: true;
-                                initial-value: 0deg;
+                                initial-value: 90deg;
                             }
                             """, stepNames.get(i)
             ));
@@ -90,7 +90,7 @@ public class CubeCssGenerator {
 
         // Generate button check for each step
         int lastStepNumber = 0;
-        for (String stepName : stepNames) {
+        for (String stepName : stepNames.reversed()) {
 
             if (stepName.contains("step")) {
                 lastStepNumber++;
@@ -98,7 +98,7 @@ public class CubeCssGenerator {
             css.append(String.format(
                     """
                                 &:has(div:nth-of-type(2)>:nth-child(4)>div:nth-child(%d) > label > input[required]:checked) {
-                                    %s: 90deg;
+                                    %s: 0deg;
                                 }
                             """, lastStepNumber, stepName
             ));

@@ -58,6 +58,46 @@ public enum Move {
         throw new IllegalArgumentException("No constant with text " + moveString + " found");
     }
 
+    public Move inverse() {
+        return switch (this) {
+            case LEFT -> LEFT_PRIME;
+            case LEFT_PRIME -> LEFT;
+            case LEFT_TWICE -> LEFT_TWICE;
+
+            case RIGHT -> RIGHT_PRIME;
+            case RIGHT_PRIME -> RIGHT;
+            case RIGHT_TWICE -> RIGHT_TWICE;
+
+            case UP -> UP_PRIME;
+            case UP_PRIME -> UP;
+            case UP_TWICE -> UP_TWICE;
+
+            case DOWN -> DOWN_PRIME;
+            case DOWN_PRIME -> DOWN;
+            case DOWN_TWICE -> DOWN_TWICE;
+
+            case FRONT -> FRONT_PRIME;
+            case FRONT_PRIME -> FRONT;
+            case FRONT_TWICE -> FRONT_TWICE;
+
+            case BACK -> BACK_PRIME;
+            case BACK_PRIME -> BACK;
+            case BACK_TWICE -> BACK_TWICE;
+
+            case X -> X_PRIME;
+            case X_PRIME -> X;
+            case X_TWICE -> X_TWICE;
+
+            case Y -> Y_PRIME;
+            case Y_PRIME -> Y;
+            case Y_TWICE -> Y_TWICE;
+
+            case Z -> Z_PRIME;
+            case Z_PRIME -> Z;
+            case Z_TWICE -> Z_TWICE;
+        };
+    }
+
     @Override
     public String toString() {
         return move;
